@@ -5,12 +5,14 @@ import User from './components/User';
 import './App.css'
 import { useCookies } from 'react-cookie';
 import { useMemo } from 'react';
+import { BrowserRouter as Router } from "react-router-dom";
+
 
 function App() {
   const { isAuthenticated } = useAuth0();
   const [cookies, setCookie] = useCookies();
 
-  // use == instead of === to change the convert the cookies value to boolean
+  // use == instead of === to convert the cookies value to boolean
   useMemo (() => {
     if ( cookies.logout == 'true' ) {
       setCookie("isAuth1" , false);
@@ -26,6 +28,8 @@ function App() {
 
 
   return (
+    <Router>
+
     <div className="App">
       { !(cookies.isAuth1 == 'true') ? 
         <div>
@@ -33,12 +37,13 @@ function App() {
            <LoginButton />
         </div>
        : 
-        <div>
+       <div>
             <LogoutButton />
             <div className='space'></div>
             <User />
         </div> }
     </div>
+    </Router>
   );
 }
 
