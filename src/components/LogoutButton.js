@@ -4,12 +4,11 @@ import { useCookies } from "react-cookie";
 
 const LogoutButton = () => {
   const { logout } = useAuth0();
-  const [setCookie] = useCookies()
+  const [cookies, setCookie] = useCookies()
 
   const handleLogout = () => {
-    logout({ returnTo: window.location.origin })
-    setCookie('isAuth1', false)
-    setCookie('isAuth2', false)
+    setCookie('logout', true);
+    logout({ returnTo: window.location.origin });
   }
 
   return (

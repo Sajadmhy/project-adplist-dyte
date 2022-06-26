@@ -4,16 +4,25 @@ import LogoutButton from './components/LogoutButton';
 import User from './components/User';
 import './App.css'
 import { useCookies } from 'react-cookie';
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 
 function App() {
   const { isAuthenticated } = useAuth0();
   const [cookies, setCookie] = useCookies();
 
+  // use == instead of === to change the convert the cookies value to boolean
   useMemo (() => {
+    if ( cookies.logout == 'true' ) {
+      setCookie("isAuth1" , false);
+      setCookie('isAuth2', false);
+      setCookie("username" , undefined);
+      setCookie("email" , undefined);
+      setCookie("picture" , undefined);
+    } else if ( cookies.logout == 'false' && isAuthenticated === true ) {
       setCookie("isAuth1" , isAuthenticated); 
       setCookie('isAuth2' , isAuthenticated);
-  }, [isAuthenticated, setCookie]);
+    } 
+  }, [isAuthenticated, setCookie, cookies.logout]);
 
 
   return (
