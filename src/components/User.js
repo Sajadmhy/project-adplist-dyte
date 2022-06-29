@@ -1,27 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import './User.css';
-import { useCookies } from 'react-cookie';
-import { useEffect, useMemo } from 'react';
 import { DyteMeeting } from "dyte-client";
-import { useParams, useNavigate } from 'react-router-dom'
 
 export default function User() {
-    const { user, isAuthenticated } = useAuth0();
-    const [cookies, setCookie] = useCookies();
-
-    useEffect(() => {
-      if ( cookies.logout == 'true') {
-        setCookie("username" , undefined);
-        setCookie("email" , undefined);
-        setCookie("picture" , undefined);
-      } else if ( isAuthenticated === true ) {
-        setCookie("username" , user?.name);
-        setCookie("email" , user?.email);
-        setCookie("picture" , user?.picture);
-      }
-  }
-  , [cookies.logout, isAuthenticated]);
+    const { isAuthenticated } = useAuth0();
 
 
   const onDyteInit = (meeting) => {
@@ -34,7 +17,7 @@ export default function User() {
 
 
     return (
-      (cookies.isAuth1 == 'true') && (
+      isAuthenticated && (
       <div className="User">
         <DyteMeeting 
         onInit={onDyteInit}

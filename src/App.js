@@ -3,31 +3,18 @@ import LoginButton from './components/LoginButton';
 import LogoutButton from './components/LogoutButton';
 import User from './components/User';
 import './App.css'
-import { useCookies } from 'react-cookie';
-import { useMemo, useEffect } from 'react';
 import { BrowserRouter as Router } from "react-router-dom";
 
 function App() {
-  const { isAuthenticated } = useAuth0();
-  const [cookies, setCookie] = useCookies();
+  const { isAuthenticated, user } = useAuth0();
 
-  // use == instead of === to convert the cookies value to boolean
-  useEffect(() => {
-    if (cookies.logout == 'true') {
-      setCookie("username", undefined);
-      setCookie("email", undefined);
-      setCookie("picture", undefined);
-    } else if (cookies.logout == 'false' && isAuthenticated === true) {
-      setCookie("isAuth1", isAuthenticated);
-      setCookie('isAuth2', isAuthenticated);
-    }
-  }, [isAuthenticated, cookies.logout]);
-
+  console.log(user?.name)
+  console.log(isAuthenticated);
 
   return (
     <Router>
       <div className="App">
-        {!(cookies.isAuth1 == 'true') ?
+        {! isAuthenticated ?
           <div>
             <p style={{ fontSize: "1.5rem" }}>App 1 <br /> Please Login</p>
             <LoginButton />
