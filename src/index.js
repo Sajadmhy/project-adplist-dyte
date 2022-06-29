@@ -15,7 +15,7 @@ ReactDOM.render(
       cacheLocation="localstorage"
       >
       <App />
-    </Auth0Provider>,
+    </Auth0Provider>
   </CookiesProvider>,
   document.getElementById('root')
 )
